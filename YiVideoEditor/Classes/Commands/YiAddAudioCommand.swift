@@ -32,22 +32,22 @@ class YiAddAudioCommand: NSObject, YiVideoEditorCommandProtocol {
         let videoDuration = videoData?.videoCompositionTrack?.timeRange.duration
         let startTime = CMTime(seconds: Double(startingAt), preferredTimescale: videoDuration?.timescale ?? CMTimeScale(0.0))
         let trackDurationTime = CMTime(seconds: Double(trackDuration), preferredTimescale: videoDuration?.timescale ?? CMTimeScale(0.0))
-        if CMTimeCompare(videoDuration ?? kCMTimeZero, startTime) == -1 {
+        if CMTimeCompare(videoDuration ?? CMTime.zero, startTime) == -1 {
             return
         }
         
-        let availableTrackDuration = CMTimeSubtract(videoDuration ?? kCMTimeZero, CMTime(seconds: Double(startingAt), preferredTimescale: videoDuration?.timescale ?? CMTimeScale(0.0)))
+        let availableTrackDuration = CMTimeSubtract(videoDuration ?? CMTime.zero, CMTime(seconds: Double(startingAt), preferredTimescale: videoDuration?.timescale ?? CMTimeScale(0.0)))
         var duration: CMTime?
-        if CMTimeCompare(availableTrackDuration, track?.timeRange.duration ?? kCMTimeZero) == -1 {
+        if CMTimeCompare(availableTrackDuration, track?.timeRange.duration ?? CMTime.zero) == -1 {
             duration = availableTrackDuration
         } else {
             duration = track?.timeRange.duration
         }
         
-        if CMTimeCompare(trackDurationTime, duration ?? kCMTimeZero) == -1 {
+        if CMTimeCompare(trackDurationTime, duration ?? CMTime.zero) == -1 {
             duration = trackDurationTime
         }
-        let timeRange = CMTimeRange(start: kCMTimeZero, duration: duration ?? kCMTimeZero)
+        let timeRange = CMTimeRange(start: CMTime.zero, duration: duration ?? CMTime.zero)
         do {
             if let track = track {
                 try audioCompositionTrack?.insertTimeRange(timeRange, of: track, at: startTime)

@@ -23,12 +23,12 @@ class YiCropCommand: NSObject, YiVideoEditorCommandProtocol {
         let duration = videoData?.composition?.duration
         if videoData?.videoComposition?.instructions.count == 0 {
             instruction = AVMutableVideoCompositionInstruction()
-            instruction?.timeRange = CMTimeRange(start: kCMTimeZero, duration: duration ?? kCMTimeZero)
+            instruction?.timeRange = CMTimeRange(start: CMTime.zero, duration: duration ?? CMTime.zero)
             if let videoCompositionTrack = videoData?.videoCompositionTrack {
                 layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoCompositionTrack)
-                layerInstruction?.setCropRectangle(cropFrame, at: kCMTimeZero)
+                layerInstruction?.setCropRectangle(cropFrame, at: CMTime.zero)
                 let t1 = CGAffineTransform(translationX: -1 * cropFrame.origin.x, y: -1 * cropFrame.origin.y)
-                layerInstruction?.setTransform(t1, at: kCMTimeZero)
+                layerInstruction?.setTransform(t1, at: CMTime.zero)
             }
         } else {
             instruction = videoData?.videoComposition?.instructions.last as? AVMutableVideoCompositionInstruction
@@ -37,13 +37,13 @@ class YiCropCommand: NSObject, YiVideoEditorCommandProtocol {
                 var start = CGAffineTransform()
                 let success = layerInstruction?.getTransformRamp(for: duration, start: &start, end: nil, timeRange: nil) ?? false
                 if !success {
-                    layerInstruction?.setCropRectangle(cropFrame, at: kCMTimeZero)
+                    layerInstruction?.setCropRectangle(cropFrame, at: CMTime.zero)
                     let t1 = CGAffineTransform(translationX: -1 * cropFrame.origin.x, y:  -1 * cropFrame.origin.y)
-                    layerInstruction?.setTransform(t1, at: kCMTimeZero)
+                    layerInstruction?.setTransform(t1, at: CMTime.zero)
                 } else {
                     let t1 = CGAffineTransform(translationX: -1 * cropFrame.origin.x, y:  -1 * cropFrame.origin.y)
                     let newTransform = start.concatenating(t1)
-                    layerInstruction?.setTransform(newTransform, at: kCMTimeZero)
+                    layerInstruction?.setTransform(newTransform, at: CMTime.zero)
                 }
             }
         }

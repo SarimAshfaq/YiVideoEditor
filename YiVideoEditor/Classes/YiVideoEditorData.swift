@@ -35,18 +35,18 @@ class YiVideoEditorData: NSObject {
         videoComposition = AVMutableVideoComposition()
         videoComposition?.frameDuration = CMTime(value: 1, timescale: 30)
         videoComposition?.renderSize = videoSize
-        let insertionPoint: CMTime = kCMTimeZero
+        let insertionPoint: CMTime = CMTime.zero
         if let assetVideoTrack = assetVideoTrack {
             videoCompositionTrack = composition?.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
             do {
-                try videoCompositionTrack?.insertTimeRange(CMTimeRange(start: kCMTimeZero, duration: asset.duration), of: assetVideoTrack, at: insertionPoint)
+                try videoCompositionTrack?.insertTimeRange(CMTimeRange(start: CMTime.zero, duration: asset.duration), of: assetVideoTrack, at: insertionPoint)
             } catch {
             }
         }
         if let assetAudioTrack = assetAudioTrack {
             audioCompositionTrack = composition?.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
             do {
-                try audioCompositionTrack?.insertTimeRange(CMTimeRange(start: kCMTimeZero, duration: asset.duration), of: assetAudioTrack, at: insertionPoint)
+                try audioCompositionTrack?.insertTimeRange(CMTimeRange(start: CMTime.zero, duration: asset.duration), of: assetAudioTrack, at: insertionPoint)
             } catch {
             }
         }

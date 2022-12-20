@@ -29,6 +29,13 @@ open class YiVideoEditor: NSObject {
         super.init()
     }
     
+    public init(videoAsset: AVAsset) {
+        let asset = videoAsset
+        self.videoData = YiVideoEditorData(asset: asset)
+        self.commands = []
+        super.init()
+    }
+    
     public func rotate(rotateDegree: YiVideoEditorRotateDegree) -> Void {
         var commandCount = 0
         switch rotateDegree {
@@ -84,8 +91,8 @@ open class YiVideoEditor: NSObject {
         addLayerCommand?.execute()
     }
     
-    public func export(exportURL: URL, completion: @escaping (AVAssetExportSession)->Void) {
-        export(exportURL: exportURL, presetName: AVAssetExportPreset1280x720, optimizeForNetworkUse: true, outputFileType: AVFileType.mov, completion: completion)
+    public func export(exportURL: URL, presetName: String = AVAssetExportPreset1280x720, completion: @escaping (AVAssetExportSession)->Void) {
+        export(exportURL: exportURL, presetName: presetName, optimizeForNetworkUse: true, outputFileType: AVFileType.mov, completion: completion)
     }
     
     func export(exportURL: URL, presetName: String, optimizeForNetworkUse: Bool, outputFileType: AVFileType, completion: @escaping (AVAssetExportSession)->Void) {

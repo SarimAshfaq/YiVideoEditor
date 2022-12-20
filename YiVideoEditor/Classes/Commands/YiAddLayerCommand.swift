@@ -32,7 +32,7 @@ class YiAddLayerCommand: NSObject, YiVideoEditorCommandProtocol {
         let duration = videoData.composition?.duration
         if videoData.videoComposition?.instructions.count == 0 {
             let instruction = AVMutableVideoCompositionInstruction()
-            instruction.timeRange = CMTimeRange(start: kCMTimeZero, duration: duration ?? kCMTimeZero)
+            instruction.timeRange = CMTimeRange(start: CMTime.zero, duration: duration ?? CMTime.zero)
             if let videoCompositionTrack = videoData.videoCompositionTrack {
                 let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoCompositionTrack)
                 instruction.layerInstructions = [layerInstruction]
